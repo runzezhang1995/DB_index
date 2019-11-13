@@ -4,7 +4,7 @@ from models.models import CreateModel
 import torch
 import cv2
 import numpy as np
-from src import get_loader
+from src import get_loader, get_celeba_loader
 from arguments.test_args import get_args
 
 import pymysql
@@ -27,6 +27,10 @@ _lbpfaces_path = 'data/lbpfaces.npy'
 meanface_path = 'data/meanImage.npy'
 eigenVec_path = 'data/eigenVectors_new.npy'
 weightVec_path = 'data/weightVectors_updated.npy'
+
+celeba_root = 'data/img_align_celeba_png/'
+
+
 
 MODEL_PATH = 'models/20_softmax.pth'
 
@@ -67,7 +71,26 @@ def get_feature_of_image(net, file_path):
     return feature.cpu().detach().numpy()
 
 
+def generate_celeba_features(net):
+    dataloader = get_celeba_loader(batch_size=256).dataloader
+    features_total = torch.Tensor(np.zeros((202599, 512), dtype=np.float32)).to(args.device)
+    names_total = []
+    labels = []
+    with torch.no_grad():
+        bs_total = 0
+        for index, (img, targets, names) in enumerate(dataloader):
+            bs = len(targets)
+            img = img.to(args.device)
+            features = net(img)
+            features_total[bs_total:bs_total + bs] = features
+            names_total[bs_total:bs_total + bs] = names
+            labels += targets
+            bs_total += bs
 
+        # assert bs_total == args.num_faces, print('Database should have {} faces!'.format(args.num_faces))
+
+    features_total = features_total.cpu().detach().numpy()
+    return features_total, labels, names_total
 
 
 #
@@ -86,6 +109,7 @@ def generate_features(net):
             names_total[bs_total:bs_total + bs] = names
             labels[bs_total:bs_total + bs] = targets
             bs_total += bs
+    
         # assert bs_total == args.num_faces, print('Database should have {} faces!'.format(args.num_faces))
 
 
@@ -135,15 +159,35 @@ if __name__ == '__main__':
 
             byte_feature = feature.tostring()
             try:
-                res = cursor.execute('INSERT INTO faces(name, image_name, feature) VALUES(%s, %s, %s);',([identity, image_name, byte_feature]))
+                res = cursor.execute('INSERT INTO faces(name, image_name, feature) VALUES(%s, %s, %s);',([identity, 'data/images/' + image_name, byte_feature]))
+            except pymysql.ProgrammingError as e:
+                print(e[1])
+                continue
+            cursor.connection.commit()
+    
+    if value[0][0] < 6000:
+        features, labels, names = generate_celeba_features(netModel.backbone)
+        for i in range(features.shape[0]):
+            feature = features[i]
+            name = names[i]
+            identity = labels[i]
+            byte_feature = feature.tostring()
+            try:
+                res = cursor.execute('INSERT INTO faces(name, image_name, feature) VALUES(%s, %s, %s);',
+                                     ([identity, name, byte_feature]))
             except pymysql.ProgrammingError as e:
                 print(e[1])
                 continue
             cursor.connection.commit()
 
+        print(features.shape)
+
+
+
+
     # retrevial features from database
     start = time.process_time()
-
+    features = []
     try:
         res = cursor.execute('select feature from faces')
         values = cursor.fetchall()
@@ -155,6 +199,11 @@ if __name__ == '__main__':
         print(e[1])
     tp = (time.process_time() - start)
     print('get test feature from db time: ', tp)
+    import sys
+    size_of_feature = sys.getsizeof(features) / 1024 / 1024
+    print('feature memory size in mb: ', size_of_feature)
+
+
 
 
 

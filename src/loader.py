@@ -12,7 +12,43 @@ _lfw_root = 'data/images/'
 _lfw_images = 'data/peopleDevTest.txt'
 _lfw_landmarks = 'data/LFW.csv'
 
+_celeba_root = 'data/img_align_celeba_png'
 
+
+class CelebADataset(torch.utils.data.Dataset):
+    def __init__(self):
+        super(CelebADataset, self).__init__()
+        self.target = []
+        self.image_list = []
+        self.landmark = []
+
+        f = open('D:\workplace\python_wp\DB_index\data\celebA\CelebA\Anno\identity_CelebA.txt')
+        line = f.readline()
+        while line:
+            img_name, identity = line.replace('\n', '').split(' ')
+            self.image_list.append(img_name)
+            self.target.append(identity)
+            line = f.readline()
+
+        f = open('D:\workplace\python_wp\DB_index\data\celebA\CelebA\Anno\list_landmarks_align_celeba.txt')
+        totalNum = f.readline()
+        key = f.readline()
+        line = f.readline()
+        while line:
+            val = line.replace('\n', '').split()
+            lm = np.array(val[1:])
+            self.landmark.append(lm)
+            line = f.readline()
+        self.num_class = int(totalNum.replace('\n', ''))
+
+    def __getitem__(self, index):
+        name = self.image_list[index].replace('jpg', 'png')
+        face = cv2.imread(_celeba_root + '/' + name)
+        face = alignment(face, self.landmark[index])
+        return face_ToTensor(face), self.target[index], _celeba_root + '/' + name
+
+    def __len__(self):
+        return self.num_class
 
 class LFWDataset(torch.utils.data.Dataset):
     def __init__(self):
@@ -67,3 +103,12 @@ class get_loader():
             self.train_iter = iter(self.dataloader)
             data = next(self.train_iter)
         return data
+
+class get_celeba_loader():
+    def __init__(self, batch_size):
+        dataset = CelebADataset()
+        num_class = None
+        self.dataloader = DataLoader(dataset= dataset, num_workers=4, batch_size=batch_size, pin_memory=True, shuffle=False, drop_last=False)
+        self.num_class = None
+        self.num_face = None
+        self.train_iter = iter(self.dataloader)
