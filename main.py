@@ -499,33 +499,38 @@ if __name__ == '__main__':
 
 
     test_identities, test_image_names, test_features  = get_test_data_from_test_db(cursor)
-    sample_size = 200
-    top_k = 1
+    sample_size = 1000
+    top_k = 5
+
+
+    num_kmeans_index_retrivial = 5
+
+
     print('==================================================')
     print('Baseline')
     # baseline
-    start = time.process_time()
+    #start = time.process_time()
 
-    good_predict = 0
-    bad_predict = 0
-
-
-    score = 1 - cdist(test_features[0:sample_size], features_saved, 'cosine')
-
-    top_k_index =  np.fliplr(np.argsort(score, axis = 1))[:,0:top_k]
-    idn = np.array(identities)
-    baseline_predict_identity = idn[top_k_index]
-    for i in range(sample_size):
-        if test_identities[i] in list(baseline_predict_identity[i]):
-            good_predict += 1
-        else:
-            bad_predict += 1
-
-    print('accuracy: ', good_predict / (good_predict + bad_predict))
+    #good_predict = 0
+    #bad_predict = 0
 
 
-    tp = (time.process_time() - start)
-    print('calculate distance time: ', tp)
+    #score = 1 - cdist(test_features[0:sample_size], features_saved, 'cosine')
+
+    #top_k_index =  np.fliplr(np.argsort(score, axis = 1))[:,0:top_k]
+    #idn = np.array(identities)
+    #baseline_predict_identity = idn[top_k_index]
+    #for i in range(sample_size):
+    #    if test_identities[i] in list(baseline_predict_identity[i]):
+    #        good_predict += 1
+    #    else:
+    #        bad_predict += 1
+
+    #print('accuracy: ', good_predict / (good_predict + bad_predict))
+
+
+    #tp = (time.process_time() - start)
+    #print('calculate distance time: ', tp)
 
     print('==================================================')
     print('Kmeans')
@@ -569,7 +574,6 @@ if __name__ == '__main__':
         idn = np.argsort(dist, axis=1)[:, 0:num_of_returned_value]
         return idn
 
-    num_kmeans_index_retrivial = 2
 
     sample_indexes = find_indexs_with_center(test_features[:sample_size], kmeans_centers, num_kmeans_index_retrivial)
     # a = self_calculated_kmeans_index.reshape(-1) == sample_indexes.reshape(-1)
@@ -603,8 +607,8 @@ if __name__ == '__main__':
     tp = (time.process_time() - start)
     print('Kmeans calculate distance time: ', tp)
 
-    kmeans_total_prediction_identity = np.array(kmeans_total_prediction_identity)
-    similiarity = np.average((kmeans_total_prediction_identity == baseline_predict_identity).astype(int))
+    #kmeans_total_prediction_identity = np.array(kmeans_total_prediction_identity)
+    #similiarity = np.average((kmeans_total_prediction_identity == baseline_predict_identity).astype(int))
 
-    print('similarity: ', similiarity)
-    exit()
+    #print('similarity: ', similiarity)
+    #exit()

@@ -141,7 +141,7 @@ def reconize_feature_with_baseline(feature, label, num_of_result, cursor):
             'identity': identities[i],
             'correct': label == identities[i],
             'score': scores[i],
-            'image': image_names[top_k_idx[i]]
+            'image': image_names[top_k_idx[i]].replace(celeba_root, '')
         })
     time_recog = time.process_time() - start
 
@@ -179,7 +179,7 @@ def reconize_feature_with_kmeans(feature, label, num_of_result, num_of_kmeans_cl
             'identity': identities[i],
             'correct': label == identities[i],
             'score': scores[i],
-            'image': image_names[top_k_idx[i]]
+            'image': image_names[top_k_idx[i]].replace(celeba_root, '')
         })
     time_recog = time.process_time() - start
 
@@ -257,8 +257,8 @@ def recognize_image(name):
 
 
 
-    res_kmeans = reconize_feature_with_kmeans(feature, label, cursor=cursor, num_of_result= 5 , num_of_kmeans_cluster= 3, centers = kmeans_centers)
-    res_base = reconize_feature_with_baseline(feature, label, cursor=cursor, num_of_result= 5)
+    res_kmeans = reconize_feature_with_kmeans(feature, label, cursor=cursor, num_of_result= 10 , num_of_kmeans_cluster= 3, centers = kmeans_centers)
+    res_base = reconize_feature_with_baseline(feature, label, cursor=cursor, num_of_result= 10)
 
     if idx.shape[0] == 1:
         return jsonify({
@@ -271,8 +271,6 @@ def recognize_image(name):
             'success':False,
             'error': 'No Such File'
         })
-
-
 
 
 if __name__ == '__main__':

@@ -2,5 +2,7 @@
 *.jpg
 *.pkl
 *.jpeg
+DB_index_demo_client/build/
+DB_index_demo_client/node_modules/
 
 
