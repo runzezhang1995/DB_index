@@ -5,10 +5,10 @@ import http from 'http';
 
 const router = express.Router();
 
-
+const base_url = 'http://127.0.0.1:1551';
 
 router.get('/testImageList', (req, res) => {
-    const url = 'http://127.0.0.1:1551/list';
+    const url = base_url + '/list';
     
     const handler = (body) => {
         const body_obj = JSON.parse(body)
@@ -31,7 +31,7 @@ router.get('/testImageList', (req, res) => {
 router.post('/recognize/:imageName', (req, res) => {
     console.log('recognize for image')
     const imageName = req.params.imageName
-    const url = 'http://127.0.0.1:1551/recognize/' + imageName;
+    const url =  base_url + '/recognize/' + imageName;
     const handler = (body) => {
         const body_obj = JSON.parse(body)
         res.send(body_obj)

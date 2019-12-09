@@ -2,7 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ca5e1970-2525-4bfe-aa3d-45d4a126bf00" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/DB_index_demo_client/scrollbarSize.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ENVS.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DB_index_demo_client/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DB_index_demo_client/src/react/components/DemoPage/gridlayout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/DB_index_demo_client/src/react/components/DemoPage/gridlayout.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DB_index_demo_client/src/react/components/DemoPage/recognition.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/DB_index_demo_client/src/react/components/DemoPage/recognition.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DB_index_demo_client/src/server/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/DB_index_demo_client/src/server/api/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dbscan.pickle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/environment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/environment.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.py" beforeDir="false" afterPath="$PROJECT_DIR$/index.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,7 +43,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/DB_index_demo_client" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -43,13 +54,14 @@
     <property name="settings.editor.selected.configurable" value="IntelliLang.Configuration" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\workplace\python_wp\DB_index" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\workplace\python_wp\DB_index\DB_index_demo_client" />
       <recent name="D:\workplace\python_wp\DB_index" />
       <recent name="D:\workplace\python_wp\DB_index\src" />
       <recent name="D:\workplace\python_wp\DB_index\common" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\workplace\python_wp\DB_index" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -207,6 +219,7 @@
       <workItem from="1575210619283" duration="7950000" />
       <workItem from="1575315332956" duration="668000" />
       <workItem from="1575326566574" duration="628000" />
+      <workItem from="1575863908291" duration="4179000" />
     </task>
     <servers />
   </component>
@@ -228,13 +241,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main.py</url>
-          <line>341</line>
-          <option name="timeStamp" value="84" />
-        </line-breakpoint>
-      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">

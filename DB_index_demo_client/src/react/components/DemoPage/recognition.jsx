@@ -11,7 +11,8 @@ import text from './text.json'
 // // import Image from 'react-bootstrap/Image';
 // import Modal from 'react-bootstrap/Modal';
 
-const image_base_url = 'http://99.23.139.146:1551/image/';
+const base_url = 'http://99.23.139.146:1551';
+const image_base_url = base_url + '/image/';
 
 
 

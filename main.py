@@ -20,7 +20,9 @@ from src import detect_faces
 from PIL import Image
 import csv
 
-from sklearn.cluster import KMeans, MiniBatchKMeans, SpectralClustering
+from sklearn.cluster import MiniBatchKMeans, SpectralClustering
+from ENVS import *
+
 
 
 _lfw_landmarks = 'data/LFW.csv'
@@ -35,7 +37,6 @@ celeba_root = 'data/img_align_celeba_png/'
 
 
 
-MODEL_PATH = 'models/20_softmax.pth'
 
 args = get_args()
 
@@ -313,7 +314,7 @@ def Kmeans_cluster_on_feature(features, names, identities):
         cursor.connection.commit()
 
 
-
+# Not in use since bad performance
 def DBSCAN_cluster_on_feature(features, names, identities):
 
 
@@ -464,7 +465,7 @@ if __name__ == '__main__':
     netModel.backbone.load_state_dict(torch.load(MODEL_PATH))
 
     #init database connecting cursor
-    db = pymysql.connect(host='localhost', user='root', password='123456', database='face', charset='utf8')
+    db = pymysql.connect(host='localhost', user=DB_USER_NAME, password=DB_PASSWORD, database=DB_DATABASE, charset='utf8')
     cursor = db.cursor()
 
     #init table
@@ -485,10 +486,10 @@ if __name__ == '__main__':
 
 # ==============================================================================
     identities, image_names, features_saved = get_train_data_from_baseline_db(cursor)
-    # do kmeans
+    # do kmeans and saved ordered feature to new db table faces_kmeans
 
     #DBSCAN_cluster_on_feature(features_saved, image_names, identities)
-    #Kmeans_cluster_on_feature(features_saved, image_names, identities)
+    Kmeans_cluster_on_feature(features_saved, image_names, identities)
 
 
 
@@ -508,29 +509,29 @@ if __name__ == '__main__':
 
     print('==================================================')
     print('Baseline')
-    # baseline
-    #start = time.process_time()
+    #baseline
+    start = time.process_time()
 
-    #good_predict = 0
-    #bad_predict = 0
-
-
-    #score = 1 - cdist(test_features[0:sample_size], features_saved, 'cosine')
-
-    #top_k_index =  np.fliplr(np.argsort(score, axis = 1))[:,0:top_k]
-    #idn = np.array(identities)
-    #baseline_predict_identity = idn[top_k_index]
-    #for i in range(sample_size):
-    #    if test_identities[i] in list(baseline_predict_identity[i]):
-    #        good_predict += 1
-    #    else:
-    #        bad_predict += 1
-
-    #print('accuracy: ', good_predict / (good_predict + bad_predict))
+    good_predict = 0
+    bad_predict = 0
 
 
-    #tp = (time.process_time() - start)
-    #print('calculate distance time: ', tp)
+    score = 1 - cdist(test_features[0:sample_size], features_saved, 'cosine')
+
+    top_k_index =  np.fliplr(np.argsort(score, axis = 1))[:,0:top_k]
+    idn = np.array(identities)
+    baseline_predict_identity = idn[top_k_index]
+    for i in range(sample_size):
+       if test_identities[i] in list(baseline_predict_identity[i]):
+           good_predict += 1
+       else:
+           bad_predict += 1
+
+    print('accuracy: ', good_predict / (good_predict + bad_predict))
+
+
+    tp = (time.process_time() - start)
+    print('calculate distance time: ', tp)
 
     print('==================================================')
     print('Kmeans')
@@ -557,17 +558,9 @@ if __name__ == '__main__':
         dict_writer.writeheader()
         dict_writer.writerows(index_category)
 
-
-
-
-
     kmeans_centers = get_kmeans_centers(cursor)
 
-    # with open('kmeans.pickle', 'rb') as f:
-    #     kmeans_model = pickle.load(f)
-
     start = time.process_time()
-    # sample_indexes = kmeans_model.predict(test_features[:sample_size])
 
     def find_indexs_with_center(features_test, centers, num_of_returned_value):
         dist = cdist(features_test, centers)
@@ -576,7 +569,6 @@ if __name__ == '__main__':
 
 
     sample_indexes = find_indexs_with_center(test_features[:sample_size], kmeans_centers, num_kmeans_index_retrivial)
-    # a = self_calculated_kmeans_index.reshape(-1) == sample_indexes.reshape(-1)
 
     good_predict = 0
     bad_predict = 0
@@ -606,9 +598,3 @@ if __name__ == '__main__':
     print('accuracy: ', good_predict / (good_predict + bad_predict))
     tp = (time.process_time() - start)
     print('Kmeans calculate distance time: ', tp)
-
-    #kmeans_total_prediction_identity = np.array(kmeans_total_prediction_identity)
-    #similiarity = np.average((kmeans_total_prediction_identity == baseline_predict_identity).astype(int))
-
-    #print('similarity: ', similiarity)
-    #exit()

@@ -9,6 +9,7 @@ import csv
 from flask import Flask, jsonify, request,  send_file
 from flask_cors import CORS
 from io import BytesIO
+from ENVS import *
 
 
 app = Flask(__name__)
@@ -211,7 +212,7 @@ def get_kmeans_centers(cursor):
 
 celeba_root = 'data/img_align_celeba_png/'
 # init database connecting cursor
-db = pymysql.connect(host='localhost', user='root', password='123456', database='face', charset='utf8')
+db = pymysql.connect(host='localhost', user=DB_USER_NAME, password=DB_PASSWORD, database=DB_DATABASE, charset='utf8')
 cursor = db.cursor()
 
 # ==============================================================================
@@ -274,5 +275,5 @@ def recognize_image(name):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='1551')
+    app.run(host='0.0.0.0', port=SERVER_PORT)
 

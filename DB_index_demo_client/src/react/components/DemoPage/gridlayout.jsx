@@ -9,7 +9,8 @@ import { Responsive, WidthProvider } from "react-grid-layout";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
-const image_base_url = 'http://99.23.139.146:1551/image/'
+const base_url = 'http://99.23.139.146:1551';
+const image_base_url = base_url + '/image/';
 
 
 

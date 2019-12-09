@@ -1,0 +1,5 @@
+DB_USER_NAME = 'root'
+DB_PASSWORD = '123456'
+DB_DATABASE = 'face'
+MODEL_PATH = 'models/20_softmax.pth'
+SERVER_PORT = '1551'
