@@ -2,18 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ca5e1970-2525-4bfe-aa3d-45d4a126bf00" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/DB_index_demo_client/scrollbarSize.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ENVS.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DB_index_demo_client/main.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DB_index_demo_client/src/react/components/DemoPage/gridlayout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/DB_index_demo_client/src/react/components/DemoPage/gridlayout.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DB_index_demo_client/src/react/components/DemoPage/recognition.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/DB_index_demo_client/src/react/components/DemoPage/recognition.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DB_index_demo_client/src/server/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/DB_index_demo_client/src/server/api/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dbscan.pickle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/environment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/environment.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.py" beforeDir="false" afterPath="$PROJECT_DIR$/index.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -219,7 +209,8 @@
       <workItem from="1575210619283" duration="7950000" />
       <workItem from="1575315332956" duration="668000" />
       <workItem from="1575326566574" duration="628000" />
-      <workItem from="1575863908291" duration="4179000" />
+      <workItem from="1575863908291" duration="4220000" />
+      <workItem from="1576000673678" duration="891000" />
     </task>
     <servers />
   </component>

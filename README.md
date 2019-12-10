@@ -55,6 +55,20 @@ And start the server with command:
     yarn start
 ```
 
+### List of Our Original Work
+Our original work including all files below:
+```bash
+    ./DB_index_demo_client/*
+    ./src/loader.py
+    ./index.py
+    ./ENVS.py
+    ./main.py
+    ./kmeans_index_category.csv
+    ./kmeans.pickle
+```
+For files referred from other repos, some modification may be applied according to our requirements in this project.
+
+
 If there is any problem you met on deploying this repo, please contact me through my [email address](runze.zhang@gatech.edu).
 
 
